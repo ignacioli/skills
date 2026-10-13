@@ -5,7 +5,9 @@ description: >-
   keep gitignored toolchain dirs consistent in worktrees. Use when starting
   or resuming work in any git repository or worktree, after git worktree add,
   or when the user asks to check the git environment, keep main clean,
-  bootstrap a worktree, or land this policy on a new repository.
+  bootstrap a worktree, or land this policy on a new repository. Skip for
+  read-only questions, non-git directories, ignored-file-only edits, or when
+  this session already printed GATE: PASS for the same worktree and branch.
 ---
 
 # ig-worktree-gate
@@ -18,6 +20,19 @@ Two invariants:
 2. **Ignored dirs in worktrees** — `git worktree add` does not copy gitignored trees. Skills, agents, `.codex/agents`, `.handoff`, SpecKit runtime subtrees, and similar must come from the **primary checkout** via the repo bootstrap script — not copied into git, not the whole of `.specify/`, `.cursor/`, or `.codex/`.
 
 `ig-handoff` snapshots topology. This skill **audits and repairs** it. Cheap when already green: run the audit script, print the status block, continue the user's task.
+
+## When not to run
+
+Do not run the audit, and do not print a status block, when any of these holds:
+
+- The task is a read-only question, explanation, or code reading that will not modify, stage, or commit any file.
+- The target is not inside a git checkout (the audit would only report `not a git checkout`).
+- The task only edits gitignored files (`.handoff/`, local skills, scratch notes). These are allowed on the primary checkout.
+- This session already printed `GATE: PASS` for the same worktree, and the branch and `cwd` have not changed since. Re-run only after `git worktree add`, a branch switch, a new checkout, or a change to the link set.
+- The repository's own `AGENTS.md` or contributor docs already define an equivalent or stricter worktree policy and the user wants that followed. Follow the repository; do not stack this gate on top.
+- The checkout is a separate repository linked into the current one (for example a private specs repository). Do not run this gate's bootstrap there.
+
+When skipped, say nothing about the gate and continue the task.
 
 ## Branch
 
