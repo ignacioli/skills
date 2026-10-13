@@ -31,12 +31,16 @@ CANDIDATES=(
   .specify/integrations
 )
 
+# $1 = path relative to the checkout, $2 = its source on the primary checkout.
+# A directory-only pattern such as ".handoff/" does not match a path that does
+# not exist yet, so a real source directory is also checked with a trailing "/".
 is_ignored() {
-  local path="$1"
-  git -C "$ROOT" check-ignore -q "$path" 2>/dev/null
+  local path="$1" src="$2"
+  git -C "$ROOT" check-ignore -q "$path" 2>/dev/null && return 0
+  [[ -d "$src" && ! -L "$src" ]] && git -C "$ROOT" check-ignore -q "$path/" 2>/dev/null
 }
 
-PRIMARY="$(git -C "$ROOT" worktree list --porcelain | awk '/^worktree / { print $2; exit }')"
+PRIMARY="$(git -C "$ROOT" worktree list --porcelain | awk '/^worktree / { sub(/^worktree /, ""); print; exit }')"
 BRANCH="$(git -C "$ROOT" rev-parse --abbrev-ref HEAD)"
 PROTECTED=no
 if [[ "$BRANCH" == "main" || "$BRANCH" == "master" ]]; then
@@ -67,7 +71,7 @@ if [[ "$IS_PRIMARY" == "no" ]]; then
     if [[ ! -e "$src" && ! -L "$src" ]]; then
       continue
     fi
-    if ! is_ignored "$rel"; then
+    if ! is_ignored "$rel" "$src"; then
       continue
     fi
     if [[ -L "$dest" ]]; then

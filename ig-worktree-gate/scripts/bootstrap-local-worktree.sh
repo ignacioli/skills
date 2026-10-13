@@ -110,7 +110,7 @@ if ! current="$(git rev-parse --show-toplevel 2>/dev/null)"; then
   exit 1
 fi
 
-primary="$(git -C "$current" worktree list --porcelain | awk '/^worktree / { print $2; exit }')"
+primary="$(git -C "$current" worktree list --porcelain | awk '/^worktree / { sub(/^worktree /, ""); print; exit }')"
 if [[ -z "$primary" ]]; then
   echo "ERROR: could not resolve the primary git worktree." >&2
   exit 1
