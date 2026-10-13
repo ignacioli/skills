@@ -1,0 +1,6 @@
+interface:
+  display_name: "ig-design-system"
+  short_description: "Component-first visual workflow: classify UI changes, spec components before code, verify components then sample pages"
+  default_prompt: "Use $ig-design-system before creating or changing user-visible UI in this repository."
+policy:
+  allow_implicit_invocation: true
