@@ -36,6 +36,14 @@ A thresholded adversarial review of a spec / plan / task decomposition. It criti
 - **Triggers when**: you ask for an adversarial / red-team spec review, a proof-ownership review, or validation-harness design; best run after the task breakdown exists and before implementation, or after a material change to the proof architecture.
 - **Dependencies**: none. It complements cross-artifact consistency tools such as SpecKit's `analyze` (spec/plan/tasks agreement), which you can run first if you use them. Platform-agnostic: web, mobile, desktop, CLI, service.
 
+### [obsidian-notes](obsidian-notes/SKILL.md)
+
+Distills significant, reusable knowledge from ongoing work (major findings, cross-project lessons, architecture or technology choices, decisions, open questions) into a personal Obsidian vault as a short, focused note. It is deliberately conservative: it writes only on an explicit capture request, reads zero existing notes by default, never scans the vault, never logs routine progress, and redacts credentials and personal identifiers.
+
+- **Triggers when**: you ask to capture something to Obsidian (the trigger phrases are Chinese: 记录到 Obsidian / 记到笔记 / 沉淀一下, plus "obsidian note"), or have explicitly asked for noteworthy findings to be captured during the current work.
+- **Configuration**: set the `OBSIDIAN_VAULT` environment variable to your vault root (for example in Claude Code's `settings.json` under `env`). Without it, the skill uses a connected Obsidian connector's vault or asks once.
+- **Dependencies**: an Obsidian connector / MCP is optional; otherwise the skill reads and writes plain Markdown files. The folder map in the Placement section and the Chinese note headings are the author's defaults; edit them to fit your vault.
+
 ## Install
 
 Clone once, then link (or copy) the skill directories you want into each tool's skills directory.
