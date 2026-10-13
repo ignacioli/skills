@@ -1,0 +1,6 @@
+interface:
+  display_name: "ig-worktree-gate"
+  short_description: "Keep primary branches clean and worktree gitignored toolchains consistent"
+  default_prompt: "Use $ig-worktree-gate to audit this git checkout before editing tracked files."
+policy:
+  allow_implicit_invocation: true

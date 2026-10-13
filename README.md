@@ -20,6 +20,15 @@ Writes one session-end handoff note to `.handoff/` in the workspace, so the next
 - **Language**: the note is written in Chinese by default; if the invoking prompt is 100% English it writes English, and "in English" overrides.
 - **Dependencies**: none. Add `.handoff/` to your `.gitignore` (the skill assumes these notes are not committed).
 
+### [ig-worktree-gate](ig-worktree-gate/SKILL.md)
+
+A gate that runs before tracked-file edits. It keeps primary branches (`main`/`master`) clean by requiring a topic branch in its own worktree, and keeps gitignored toolchain directories (skills, agents, `.handoff`, SpecKit runtime subtrees) consistent across worktrees by relative-symlinking them from the primary checkout. It prints a `GATE: PASS | BLOCKED` status block and a next action.
+
+- **Triggers when**: starting or resuming work in a git repository or worktree, after `git worktree add`, or when asked to check the git environment, keep main clean, bootstrap a worktree, or land the policy on a new repository (`Land` branch copies the bootstrap script and an `AGENTS.md` pointer into that repo).
+- **Contents**: workflow in `SKILL.md`; [scripts/audit.sh](ig-worktree-gate/scripts/audit.sh) (facts-only audit); [scripts/bootstrap-local-worktree.sh](ig-worktree-gate/scripts/bootstrap-local-worktree.sh) (idempotent linker, supports `--dry-run` and `--force`); [repo-pointer.md](ig-worktree-gate/repo-pointer.md) (text to append to a repo's `AGENTS.md`).
+- **Dependencies**: `bash`, `git`, `python3` (used for `realpath`/`relpath`). Optional: `ig-handoff` for topology snapshots.
+- **Opinionated defaults**: the list of linked paths is hard-coded in both scripts (`.handoff`, `.agents/skills`, `.cursor/{skills,agents}`, `.claude/{skills,agents}`, `.codex/agents`, `.specify/{scripts,templates,workflows,integrations}`, and `specs`). Missing sources are skipped. `specs` is the author's convention of a symlink to a separate private specs repository; edit the list in `audit.sh` and `bootstrap-local-worktree.sh` together if your layout differs, or skip this skill entirely.
+
 ## Install
 
 Clone once, then link (or copy) the skill directories you want into each tool's skills directory.
