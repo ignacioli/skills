@@ -1,0 +1,6 @@
+interface:
+  display_name: "ig-handoff"
+  short_description: "Write one session-end note under .handoff/"
+  default_prompt: "Use $ig-handoff to write one session-end note under .handoff/ covering this whole session."
+policy:
+  allow_implicit_invocation: false

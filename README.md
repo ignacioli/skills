@@ -12,6 +12,14 @@ A component-first visual workflow for UI work. Tokens fix values; a written comp
 - **Contents**: workflow in `SKILL.md`; [land.md](ig-design-system/land.md) for putting the spec on a repo; [templates/](ig-design-system/templates) (component spec, implementation map, catalog test, `AGENTS.md` pointer); [tools/](ig-design-system/tools) for the hi-fi and lo-fi tools.
 - **Dependencies** (all optional): [Penpot](https://penpot.app) MCP server as the default hi-fi tool, [Open Design](ig-design-system/tools/open-design.md) MCP server as the default lo-fi tool. Without them, keep the same gates and record where the approved source lives. `land.md` mentions `ig-worktree-gate` as an optional first step if you also install it.
 
+### [ig-handoff](ig-handoff/SKILL.md)
+
+Writes one session-end handoff note to `.handoff/` in the workspace, so the next session (human or agent) knows where the work stands: workspace snapshot (repo, branch, HEAD, worktree/submodule/symlink topology), what was solved, AI proposals versus human decisions, real blockers, and what to pick up first.
+
+- **Triggers when**: you explicitly name `ig-handoff` at the end of a session. It is user-invoked only (`disable-model-invocation: true`, no implicit invocation in `agents/openai.yaml`). It never resumes work from an existing handoff file.
+- **Language**: the note is written in Chinese by default; if the invoking prompt is 100% English it writes English, and "in English" overrides.
+- **Dependencies**: none. Add `.handoff/` to your `.gitignore` (the skill assumes these notes are not committed).
+
 ## Install
 
 Clone once, then link (or copy) the skill directories you want into each tool's skills directory.
