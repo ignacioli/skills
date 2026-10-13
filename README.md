@@ -29,6 +29,13 @@ A gate that runs before tracked-file edits. It keeps primary branches (`main`/`m
 - **Dependencies**: `bash`, `git`, `python3` (used for `realpath`/`relpath`). Optional: `ig-handoff` for topology snapshots.
 - **Opinionated defaults**: the list of linked paths is hard-coded in both scripts (`.handoff`, `.agents/skills`, `.cursor/{skills,agents}`, `.claude/{skills,agents}`, `.codex/agents`, `.specify/{scripts,templates,workflows,integrations}`, and `specs`). Missing sources are skipped. `specs` is the author's convention of a symlink to a separate private specs repository; edit the list in `audit.sh` and `bootstrap-local-worktree.sh` together if your layout differs, or skip this skill entirely.
 
+### [spec-adversarial-review](spec-adversarial-review/SKILL.md)
+
+A thresholded adversarial review of a spec / plan / task decomposition. It critiques the **proof architecture**, not the feature: every claim should be proved once, at the right layer, by a deterministic mechanism, without re-proving it through expensive end-to-end, screenshot or manual-visual loops. Findings must be reachable and mechanically evidenced, carry a severity and a remediation target, and the review is read-only unless you authorize spec edits. Repeat runs are gated (`INITIAL` / `DELTA` / `INCIDENT`) so the skill does not cause spec churn.
+
+- **Triggers when**: you ask for an adversarial / red-team spec review, a proof-ownership review, or validation-harness design; best run after the task breakdown exists and before implementation, or after a material change to the proof architecture.
+- **Dependencies**: none. It complements cross-artifact consistency tools such as SpecKit's `analyze` (spec/plan/tasks agreement), which you can run first if you use them. Platform-agnostic: web, mobile, desktop, CLI, service.
+
 ## Install
 
 Clone once, then link (or copy) the skill directories you want into each tool's skills directory.

@@ -1,0 +1,6 @@
+interface:
+  display_name: "spec-adversarial-review"
+  short_description: "Thresholded adversarial review for deterministic proof without repeated specs churn"
+  default_prompt: "Use $spec-adversarial-review to adversarially review this spec/plan/tasks decomposition before implementation."
+policy:
+  allow_implicit_invocation: true
