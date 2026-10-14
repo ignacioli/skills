@@ -29,7 +29,7 @@ Do not run the audit, and do not print a status block, when any of these holds:
 - The target is not inside a git checkout (the audit would only report `not a git checkout`).
 - The task only edits gitignored files (`.handoff/`, local skills, scratch notes). These are allowed on the primary checkout.
 - This session already printed `GATE: PASS` for the same worktree, and the branch and `cwd` have not changed since. Re-run only after `git worktree add`, a branch switch, a new checkout, or a change to the link set.
-- The repository's own `AGENTS.md` or contributor docs already define an equivalent or stricter worktree policy and the user wants that followed. Follow the repository; do not stack this gate on top.
+- The repository's own `AGENTS.md` or contributor docs already define an equivalent or stricter worktree policy of its own and the user wants that followed. Follow the repository; do not stack this gate on top. This does not apply when those docs tell agents to run `ig-worktree-gate` (as the [repo-pointer.md](repo-pointer.md) text does): that delegates to this gate, so run it.
 - The checkout is a separate repository linked into the current one (for example a private specs repository). Do not run this gate's bootstrap there.
 
 When skipped, say nothing about the gate and continue the task.
