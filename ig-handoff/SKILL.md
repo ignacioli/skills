@@ -79,7 +79,7 @@ git -C <sibling-or-link-target> status --short
 
 公有 / 私有：用已有 handoff、remote、或 `gh repo view --json isPrivate` 等已核实来源。不知道就省略，不要猜。
 
-文首 banner 之后立刻写 **工作区快照**。每个相关 checkout 写清：
+文首 banner 之后立刻写 **工作区快照**。快照段落结束之后立刻写 **下一任从这里接手**，让下一任先看到从哪继续，再读本轮经过。每个相关 checkout 写清：
 
 - 绝对路径
 - 公有 / 私有（已知才写）
@@ -99,13 +99,13 @@ Redact secrets: API keys, passwords, tokens, machine login credentials, and PII.
 
 1. **当前入口** — which file to open next; point at older handoffs for evidence only.
 2. **工作区快照** — required; see above. Capture this workspace, never copy another project's paths.
-3. **本轮从哪里开始** — the concrete handoff/commit/task/file and state that this session actually picked up.
-4. **本轮解决了什么** — the main-line outcome only.
-5. **遇到什么问题，问题如何解决** — pair each observed problem with its evidence and the applied resolution; omit incidental debugger trails.
-6. **AI 和人类如何决策** — distinguish AI proposals/inferences from human approvals/rejections/constraints; never present an AI suggestion as a human decision.
-7. **Block / Failed** — include only real blockers or failures, each with an evidence source (command, test, artifact/log/path/task/commit, etc.) and current status. If none exists, omit this section entirely; never use an empty placeholder or fabricate a failure.
-8. **待解决问题** — still true, still blocking or next; shrink this list when the user named a next-session focus.
-9. **下次从哪里接手，优先做什么** — concrete first command or file, then an ordered list. Include duration and completion signal for long tasks.
+3. **下一任从这里接手** — immediately after the snapshot. Concrete first command or file, then an ordered list. Include duration and completion signal for long tasks.
+4. **本轮从哪里开始** — the concrete handoff/commit/task/file and state that this session actually picked up.
+5. **本轮解决了什么** — the main-line outcome only.
+6. **遇到什么问题，问题如何解决** — pair each observed problem with its evidence and the applied resolution; omit incidental debugger trails.
+7. **AI 和人类如何决策** — distinguish AI proposals/inferences from human approvals/rejections/constraints; never present an AI suggestion as a human decision.
+8. **Block / Failed** — include only real blockers or failures, each with an evidence source (command, test, artifact/log/path/task/commit, etc.) and current status. If none exists, omit this section entirely; never use an empty placeholder or fabricate a failure.
+9. **待解决问题** — still true, still blocking or next; shrink this list when the user named a next-session focus.
 10. **建议调用的 skills** — only skills that exist in this workspace or that this session actually used (path or name). Skip the section if none. Do not suggest `ig-handoff` as a next-step skill.
 11. **不要做** — only if this session established a hard don't (product red line, wrong refactor, mixed measurement series).
 12. **关键提交 / HEAD** — this session's commits with one-line why. If the snapshot already lists current `HEAD`, do not repeat SHAs here unless a commit message / intent is worth keeping.
@@ -129,6 +129,18 @@ Omit: debugger trails, clarifying Q&A, chitchat, terminology debates, and any nu
 - <in-tree 名> 是软链接 → `<abs-target>`。仓库内读取用 `<in-tree/foo>`，不要拼 `<wrong/path>`。
 - <若是 worktree> 本工作区是 `<main-checkout>` 的 worktree：`<abs-path>`（`<branch>`）
 - <若是 submodule> `<in-tree path>` 是 submodule @ `<sha>`（不是软链接）
+
+## 下一任从这里接手 (Pick up here)
+
+**优先** (First): <第一件具体事。>
+
+<command or file, if any>
+
+然后按需:
+
+| 顺序 | 做什么 | 为何 |
+|------|--------|------|
+| 1 | | |
 
 ## 本轮从哪里开始 (Where this session started)
 
@@ -157,18 +169,6 @@ Omit: debugger trails, clarifying Q&A, chitchat, terminology debates, and any nu
 ## 待解决问题 (Open problems)
 
 1. …
-
-## 下一任从这里接手 (Pick up here)
-
-**优先** (First): <第一件具体事。>
-
-<command or file, if any>
-
-然后按需:
-
-| 顺序 | 做什么 | 为何 |
-|------|--------|------|
-| 1 | | |
 
 ## 建议调用的 skills (Suggested skills)
 
