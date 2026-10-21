@@ -1,0 +1,69 @@
+--- .claude/skills/speckit-tasks/SKILL.md
++++ .claude/skills/speckit-tasks/SKILL.md
+@@ -81,7 +81,7 @@
+    - Phase 1: Setup tasks (project initialization)
+    - Phase 2: Foundational tasks (blocking prerequisites for all user stories)
+    - Phase 3+: One phase per user story (in priority order from spec.md)
+-   - Each phase includes: story goal, independent test criteria, tests (if requested), implementation tasks
++   - Each phase includes: story goal, independent test criteria, tests (if requested), implementation tasks, and — for every phase with a Checkpoint — a closing evidence task plus the Checkpoint's **Done when** / **Proven by** lines (see Checkpoints and Evidence below)
+    - Final Phase: Polish & cross-cutting concerns
+    - All tasks must follow the strict checklist format (see Task Generation Rules below)
+    - Clear file paths for each task
+@@ -132,7 +132,7 @@
+ - Parallel opportunities identified
+ - Independent test criteria for each story
+ - Suggested MVP scope (typically just User Story 1)
+-- Format validation: Confirm ALL tasks follow the checklist format (checkbox, ID, labels, file paths)
++- Format validation: Confirm ALL tasks follow the checklist format (checkbox, ID, labels, file paths), every Checkpoint has **Done when** + **Proven by** and ends with one evidence task, and no task restates a fact owned by spec/plan/data-model/contracts
+ 
+ Context for task generation: $ARGUMENTS
+ 
+@@ -171,10 +171,13 @@
+ - ✅ CORRECT: `- [ ] T005 [P] Implement authentication middleware in src/middleware/auth.py`
+ - ✅ CORRECT: `- [ ] T012 [P] [US1] Create User model in src/models/user.py`
+ - ✅ CORRECT: `- [ ] T014 [US1] Implement UserService in src/services/user_service.py`
++- ✅ CORRECT: `- [ ] T015 [US1] Validate signup input per data-model.md §2 in src/services/user_service.py`
++- ✅ CORRECT: `- [ ] T019 [US1] Phase 3 checkpoint evidence in docs/validation.md`
+ - ❌ WRONG: `- [ ] Create User model` (missing ID and Story label)
+ - ❌ WRONG: `T001 [US1] Create model` (missing checkbox)
+ - ❌ WRONG: `- [ ] [US1] Create User model` (missing Task ID)
+ - ❌ WRONG: `- [ ] T001 [US1] Create model` (missing file path)
++- ❌ WRONG: `- [ ] T015 [US1] Validate email (max 254 chars, required, unique) in src/services/user_service.py` (restates data-model — cite `per data-model.md §2`)
+ 
+ ### Task Organization
+ 
+@@ -195,13 +198,26 @@
+    - Map each entity to the user story(ies) that need it
+    - If entity serves multiple stories: Put in earliest story or Setup phase
+    - Relationships → service layer tasks in appropriate story phase
+-   - For each field with constraints in data-model.md (max length, nullable/required, enum values, validation rules), quote the constraint verbatim in the task description so it is not left to implementation-time discretion
++   - For each field with constraints in data-model.md (max length, nullable/required, enum values, validation rules), cite the section (`per data-model.md §N`) in the task description instead of quoting the constraint, so the constraint has one home and cannot drift
+ 
+ 4. **From Setup/Infrastructure**:
+    - Shared infrastructure → Setup phase (Phase 1)
+    - Foundational/blocking tasks → Foundational phase (Phase 2)
+    - Story-specific setup → within that story's phase
+ 
++### Checkpoints and Evidence
++
++- Every `**Checkpoint**` line is followed by **Done when** (observable outcome, citing FR/SC/AC IDs) and **Proven by** (the command, test file, or recorded artifact that shows it). "Works", "verified", or "tested" alone is not a proof, and neither is a task ID (task IDs change on split or converge; name what the task produces).
++- The last task of every phase that has a Checkpoint is one evidence task: `- [ ] T### [US#?] Phase N checkpoint evidence in <execution record path>`. It runs the proof named in **Proven by** and records the result; it adds no implementation and no new tests. Take the gate commands and record path from plan.md **Checkpoint Evidence**.
++- Project proof: the repository declares what counts as proof (its `AGENTS.md` or `.specify/templates/overrides/README.md`, section **Project proof**); use it for **Proven by** and the evidence task.
++- No test-first ordering or red/green gate is added by these rules.
++
++### References, Not Copies
++
++- Facts already stated in spec.md, plan.md, research.md, data-model.md, or contracts/ (fields, limits, validation rules, state machines, user-facing copy, decisions) are cited — `per data-model.md §3`, `spec FR-012`, `contracts/x.md §2`, `plan D-004` — never paraphrased into a task.
++- Task text adds only what the sources do not say: the action, the file, and the dependency.
++- If a source is wrong, ambiguous, or silent on something a task needs, report it in the Completion Report instead of resolving it inside a task.
++
+ ### Phase Structure
+ 
+ - **Phase 1**: Setup (project initialization)
+@@ -214,5 +230,6 @@
+ ## Done When
+ 
+ - [ ] tasks.md generated with all phases, task IDs, and file paths
++- [ ] Every Checkpoint has Done when + Proven by and a closing evidence task; facts owned by other artifacts are cited, not restated
+ - [ ] Extension hooks dispatched or skipped according to the rules in Mandatory Post-Execution Hooks above
+ - [ ] Completion reported to user with task count, story breakdown, and MVP scope

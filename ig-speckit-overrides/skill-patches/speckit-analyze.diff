@@ -1,0 +1,46 @@
+--- .claude/skills/speckit-analyze/SKILL.md
++++ .claude/skills/speckit-analyze/SKILL.md
+@@ -74,6 +74,7 @@
+ - SPEC = FEATURE_DIR/spec.md
+ - PLAN = FEATURE_DIR/plan.md
+ - TASKS = FEATURE_DIR/tasks.md
++- DATA_MODEL = FEATURE_DIR/data-model.md and CONTRACTS = FEATURE_DIR/contracts/ (optional; load when listed in AVAILABLE_DOCS)
+ 
+ Abort with an error message if any required file is missing (instruct the user to run missing prerequisite command).
+ For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
+@@ -105,6 +106,11 @@
+ - Parallel markers [P]
+ - Referenced file paths
+ 
++**From data-model.md and contracts/ (if present):**
++
++- Section headings and numbers (§N) — needed to resolve references from plan.md and tasks.md
++- Field constraints, limits, validation rules, state machines (only the sections that plan.md or tasks.md reference or restate)
++
+ **From constitution:**
+ 
+ - Load `.specify/memory/constitution.md` for principle validation
+@@ -148,6 +154,13 @@
+ - Requirements with zero associated tasks
+ - Tasks with no mapped requirement/story
+ - Success Criteria requiring buildable work (performance, security, availability) not reflected in tasks
++
++#### G. Reference Integrity (References, not copies)
++
++- **Broken reference**: a `§N`, section name, `D-xxx`, or FR/SC/AC ID cited in plan.md or tasks.md that does not exist in the cited artifact, or points at a section about something else
++- **Restatement**: plan.md or tasks.md repeats a fact owned by spec.md, data-model.md, or contracts/ (field constraint, limit, validation order, state transition, user-facing copy) instead of citing it — report even when the copies currently agree
++- **Restatement drift**: a restated fact that no longer matches its source (severity HIGH; it is also an Inconsistency)
++- **Checkpoint proof**: a `**Checkpoint**` without **Done when** / **Proven by**, a proof that is only "works"/"verified" or only a task ID, or a checkpoint phase without a closing evidence task
+ 
+ #### F. Inconsistency
+ 
+@@ -194,6 +207,9 @@
+ - Ambiguity Count
+ - Duplication Count
+ - Critical Issues Count
++- Cross-Artifact Inconsistency Count (F findings + G restatement drift)
++- Restatement Count / Restatement Drift Count / Broken Reference Count (G)
++- Checkpoints Missing Proof or Evidence Task (G)
+ 
+ ### 7. Provide Next Actions
+ 

@@ -29,6 +29,15 @@ Writes one session-end handoff note to `.handoff/` in the workspace, so the next
 - **Language**: the note is written in Chinese by default; if the invoking prompt is 100% English it writes English, and "in English" overrides.
 - **Dependencies**: none. Add `.handoff/` to your `.gitignore` (the skill assumes these notes are not committed).
 
+### [ig-speckit-overrides](ig-speckit-overrides/SKILL.md)
+
+Local enhancements for [SpecKit](https://github.com/github/spec-kit) as an on-demand workflow: every checkpoint in `tasks.md` carries **Done when / Proven by**, every checkpoint phase ends with one evidence task, facts are cited instead of copied between spec/plan/data-model/tasks, and `analyze` gains a Reference Integrity check, reported as a new section G after upstream's A–F (broken reference, restatement, restatement drift, checkpoint proof). Delivered as two template overrides plus patches to the `speckit-{tasks,plan,analyze}` `SKILL.md` files.
+
+- **Triggers when**: landing the overrides in a repository (`Land`), re-syncing them after a `specify` upgrade (`Upgrade`), checking that they are active (`Check`, the default), or writing/checking `tasks.md` and `plan.md` where the checkpoint rules matter.
+- **Contents**: workflow in `SKILL.md`; a worked example in [USAGE.md](ig-speckit-overrides/USAGE.md); [scripts/check.sh](ig-speckit-overrides/scripts/check.sh) (read-only facts: template resolution, patch status per integration, `feature.json`); [templates/](ig-speckit-overrides/templates) (tasks/plan overrides, overrides README); [skill-patches/](ig-speckit-overrides/skill-patches) (three `.diff` files and an idempotent `apply.sh` that reports `FAIL` on conflict).
+- **Dependencies**: SpecKit `specify` CLI (patches are generated against the 1.1.3 skill text; other versions may report `FAIL` and need a manual merge), `bash`, `patch`, `git`. Optional: `ig-worktree-gate`, `spec-adversarial-review`.
+- **Per-repository setting**: what counts as proof (build, tests, UI checklists) is declared by the target repository in a **Project proof** section; the skill ships no default.
+
 ### [ig-worktree-gate](ig-worktree-gate/SKILL.md)
 
 A gate that runs before tracked-file edits. It keeps primary branches (`main`/`master`) clean by requiring a topic branch in its own worktree, and keeps gitignored toolchain directories (skills, agents, `.handoff`, SpecKit runtime subtrees) consistent across worktrees by relative-symlinking them from the primary checkout. It prints a `GATE: PASS | BLOCKED` status block and a next action.
