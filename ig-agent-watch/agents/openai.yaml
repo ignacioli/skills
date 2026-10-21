@@ -1,0 +1,6 @@
+interface:
+  display_name: "ig-agent-watch"
+  short_description: "Read-only check of a long-running AI agent: drift, loops, test bloat, stalls"
+  default_prompt: "Use $ig-agent-watch to check whether the agent working in this worktree is drifting, looping, over-building tests or stalled."
+policy:
+  allow_implicit_invocation: true

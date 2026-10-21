@@ -4,6 +4,15 @@ Personal agent skills, shared as-is. Each skill is a self-contained directory wi
 
 ## Skills
 
+### [ig-agent-watch](ig-agent-watch/SKILL.md)
+
+A read-only patrol for an AI agent (Codex, Cursor, OpenCode, a Claude sub-session, any CLI agent) running a long task in a git worktree. A script reports facts only: progress since a base commit, log growth and repeated errors, files outside `--scope` or matching `--forbid`, test-versus-source size, new test infrastructure, deleted or modified assertions, added skip markers, and whether the agent process is alive. `SKILL.md` maps each fact to normal / watch / needs-human with default thresholds and known false alarms, and gives a recurring-patrol prompt and report format. It never stops the agent.
+
+- **Triggers when**: an agent is mid-run and you want to know whether it drifted, is looping, is over-building tests or has stalled (one-off or on a timer), or right after it exits.
+- **Contents**: workflow and reading table in `SKILL.md`; [scripts/watch.sh](ig-agent-watch/scripts/watch.sh) (wrapper) and [scripts/watch.py](ig-agent-watch/scripts/watch.py) (facts, `key=value` output).
+- **Dependencies**: `bash`, `git`, `python3` (standard library only), `ps`. Project specifics (scope, forbidden paths, test and log patterns) are passed as options or a `.long-task-watch.conf` file; defaults cover common test file names for Swift, Go, TypeScript/JavaScript, Python, Java/Kotlin and Ruby.
+- **Writes**: nothing, except a `--state` snapshot at a path you give outside the worktree.
+
 ### [ig-design-system](ig-design-system/SKILL.md)
 
 A component-first visual workflow for UI work. Tokens fix values; a written component **anatomy** fixes structure. The skill classifies every UI change by design delta (0→1, revision, spec backfill, drift repair), requires a component spec before dependent code, and verifies bottom-up (tokens, component contract, page composition) so humans only review where judgment is needed.
