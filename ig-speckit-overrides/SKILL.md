@@ -95,5 +95,5 @@ What counts as proof differs per repository (build, test suites, UI or entry che
 
 ## Relation to other tools
 
-- `speckit-analyze` (patched) checks spec/plan/tasks agreement including category G. the `spec-adversarial-review` skill (if installed) reviews the proof architecture itself (duplicate proofs, subjective DONE, wrong validation layer); run analyze first, it complements rather than replaces it.
+- `speckit-analyze` (patched) checks spec/plan/tasks agreement including category G. The `spec-adversarial-review` skill (if installed) reviews the proof architecture itself (duplicate proofs, subjective DONE, wrong validation layer); run analyze first, it complements rather than replaces it.
 - `ig-worktree-gate` keeps `main` clean and links gitignored `.specify` subtrees into worktrees; the overrides directory is one of them.
