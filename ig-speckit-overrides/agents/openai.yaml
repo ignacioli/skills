@@ -1,0 +1,6 @@
+interface:
+  display_name: "ig-speckit-overrides"
+  short_description: "Land, upgrade and check local SpecKit templates and skill patches for checkpoint proof"
+  default_prompt: "Use $ig-speckit-overrides to check whether the SpecKit overrides are active in this repository."
+policy:
+  allow_implicit_invocation: true
