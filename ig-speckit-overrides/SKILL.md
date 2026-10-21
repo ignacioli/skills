@@ -85,7 +85,7 @@ Source of truth is the landed templates; read them rather than this summary when
 1. **Done when / Proven by.** Every `**Checkpoint**` in tasks.md is followed by *Done when* (observable outcome citing FR/SC/AC IDs) and *Proven by* (command, test file, or recorded artifact). "Works", "verified", or a task ID is not a proof.
 2. **One evidence task per checkpoint phase.** The last task of each phase with a Checkpoint is `- [ ] T### [US#?] Phase N checkpoint evidence in <execution record path>`: it runs the proof, records the result, adds no implementation or tests. Setup and Polish phases have no checkpoint and no evidence task. plan.md **Checkpoint Evidence** names the gate commands and record path.
 3. **References, not copies.** A fact lives in one artifact (requirements → spec; fields/validation → data-model; interfaces → contracts; decisions → research/plan). Others cite it (`per data-model.md §3`, `spec FR-012`). data-model.md and contracts/ number their sections (§N). Sources that are wrong or silent get flagged, not patched inside a task.
-4. **analyze category G (Reference Integrity).** Reports *broken reference*, *restatement*, *restatement drift* (HIGH), and *checkpoint proof* (missing Done when/Proven by, proof that is only "works" or a task ID, checkpoint phase without evidence task), with matching Metrics counts. It also loads data-model.md and contracts/ when present.
+4. **`analyze` Reference Integrity check.** The patched `speckit-analyze` adds one detection section, labelled **G** in its report (upstream already uses A–F; G is only the next letter, not an acronym). It reports *broken reference*, *restatement*, *restatement drift* (HIGH), and *checkpoint proof* (missing Done when/Proven by, proof that is only "works" or a task ID, checkpoint phase without evidence task), with matching Metrics counts. It also loads data-model.md and contracts/ when present.
 
 No phase or task caps and no test-first gate are added.
 
@@ -95,5 +95,5 @@ What counts as proof differs per repository (build, test suites, UI or entry che
 
 ## Relation to other tools
 
-- `speckit-analyze` (patched) checks spec/plan/tasks agreement including category G. The `spec-adversarial-review` skill (if installed) reviews the proof architecture itself (duplicate proofs, subjective DONE, wrong validation layer); run analyze first, it complements rather than replaces it.
+- `speckit-analyze` (patched) checks spec/plan/tasks agreement including the Reference Integrity check (section G). The `spec-adversarial-review` skill (if installed) reviews the proof architecture itself (duplicate proofs, subjective DONE, wrong validation layer); run analyze first, it complements rather than replaces it.
 - `ig-worktree-gate` keeps `main` clean and links gitignored `.specify` subtrees into worktrees; the overrides directory is one of them.

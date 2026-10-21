@@ -2,7 +2,7 @@
 
 Landed by the `ig-speckit-overrides` skill. Baseline: SpecKit (`specify` CLI) <BASELINE_VERSION> default templates
 plus three rules (Done when + Proven by, one evidence task per checkpoint, references not copies) and an `analyze`
-reference-integrity check (category G).
+Reference Integrity check (a new section G in the report, after upstream's A–F).
 
 ## Project proof
 

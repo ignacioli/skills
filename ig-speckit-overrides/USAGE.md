@@ -41,7 +41,7 @@ Tasks cite `§2` instead of copying the field constraint.
 
 ## 4. `/speckit-analyze`
 
-The report gains category G findings (broken reference, restatement, restatement drift, checkpoint proof) and matching Metrics counts.
+The report gains a **Reference Integrity** section (labelled G, after upstream's A–F) with findings for broken reference, restatement, restatement drift and checkpoint proof, and matching Metrics counts.
 
 ## 5. Check: quick self-test
 
