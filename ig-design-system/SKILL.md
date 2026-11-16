@@ -21,6 +21,8 @@ The repository owns the facts (token values, component IDs, file paths, test nam
 | **Task** (default) | Any work that creates or changes user-visible UI | Steps below |
 | **Land** | The repo has no component spec yet, or the user asks to apply this workflow to a repo | [land.md](land.md) |
 | **Backfill** | Approved designs exist but the anatomy spec, code mapping or design-file annotations are missing or stale | Task steps 1–3 with class C, then [tools/penpot.md](tools/penpot.md) §Annotate |
+| **Align** (upstream) | The design system was extracted from boards that were never re-aligned to it; a new repo is landing; or screen acceptance keeps tracing drift to the boards | [alignment.md](alignment.md): one-way authority, geometry contract, `DS-PAGE-FLOW`, board scan gate |
+| **Conform** (downstream) | A spec-named core screen is implemented or changed and must be machine-proven against its design, then locked | [screen-conformance.md](screen-conformance.md): one owner layer per defect class, geometry comparison, hash-locked baselines |
 
 Tools: Penpot is the default **hi-fi** tool ([tools/penpot.md](tools/penpot.md)); Open Design is the default **lo-fi** tool ([tools/open-design.md](tools/open-design.md)). Both are optional: if the repo names another tool, or none, keep the same gates and record where the approved source lives instead.
 
@@ -31,7 +33,9 @@ Tools: Penpot is the default **hi-fi** tool ([tools/penpot.md](tools/penpot.md))
 3. Per-milestone design directory: approved screens plus its `implementation-map.md` (page composition and feature-owned components only).
 4. Production code: where the implementation currently lives. When code disagrees with 1–3, **fix the code**. Never edit the design to legitimize drifted code.
 
-The design file (Penpot) is the source of 1 and 3. Doc, exported screens and design file move together in the same round.
+The design file (Penpot) holds the main components that instantiate 1–2 and the approved screens of 3. Doc, exported screens and design file move together in the same round.
+
+Inside the design, rules (1, 2) define values and relations and boards are their instances: a board that disagrees with a rule is fixed on the board, or the owner changes the rule and the boards follow in the same round ([alignment.md](alignment.md) §2). A page task starts only on boards that scan clean.
 
 ## Task steps
 
@@ -77,6 +81,8 @@ Lower layers pass before higher ones run.
 | **L3** human | Only facts structured evidence cannot settle | Owner, against approved screens, under the triggers below |
 
 Each invariant is labelled `auto` (test exists), `automatable` (could be tested, isn't yet) or `manual` (looked at once when the **component** is introduced or changed, never again per page). New or extended components get a test for every automatable invariant they introduce, plus a preview/story covering representative states.
+
+Core screens additionally go through [screen-conformance.md](screen-conformance.md): design-geometry comparison under the shared geometry contract ([templates/geometry-contract.md](templates/geometry-contract.md)), then a hash-locked baseline the owner approves once. Component states never get PNG baselines; L1 structural assertions own them.
 
 Route each acceptance fact to the **least visual** evidence source that can prove it: source and artifact inspection → semantic/accessibility automation → deterministic state, logs, files → existing tests → screenshots only for an inherently visual remainder. A screenshot → judge → edit → screenshot loop is never an acceptance mechanism; when a human must look, seed the environment and hand over control.
 

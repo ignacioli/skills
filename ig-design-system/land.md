@@ -15,7 +15,13 @@ Locate, without creating anything yet:
 
 **Done when:** each item is a real path or explicitly "none".
 
-## 2. Write `components.md`
+## 2. Fix the authority direction and align the boards
+
+Before extracting anatomy, decide and write down that rules (value spec, geometry contract, `components.md` with `DS-PAGE-FLOW`) define values and relations and that boards are their instances. Then run [alignment.md](alignment.md): geometry contract into the value spec ([templates/geometry-contract.md](templates/geometry-contract.md)), relation distributions measured by the board scan, one token per relation chosen by the owner ([templates/page-flow.md](templates/page-flow.md)), boards fixed, scan calibrated on 1–2 owner-endorsed boards and then run on all approved boards. If the repo has core screens already implemented, also plan [screen-conformance.md](screen-conformance.md) for them.
+
+**Done when:** the authority direction is in the charter, the approved boards scan clean outside registered exceptions, and every owner-chosen value has a decision id.
+
+## 3. Write `components.md`
 
 Copy [templates/components.md](templates/components.md) to `<design-root>/design-system/components.md` and fill it:
 
@@ -28,26 +34,26 @@ Copy [templates/components.md](templates/components.md) to `<design-root>/design
 
 Dead components or dead designs found here are reported to the owner with evidence (no consumers, superseded board); delete only on their decision.
 
-**Done when:** the catalog test (step 4) would pass against the index, every ID has an anatomy heading, and nothing in §4 is a new design decision.
+**Done when:** the catalog test (step 5) would pass against the index, every ID has an anatomy heading, and nothing in §4 is a new design decision.
 
-## 3. Wire the charter
+## 4. Wire the charter
 
 Append [templates/agents-pointer.md](templates/agents-pointer.md) to `AGENTS.md` (and mirror into `CLAUDE.md` / constitution if the repo keeps them). If the repo has a "checkpoint done" rule requiring a human walkthrough per checkpoint, replace it with: automated gate + entry and layout map per checkpoint, human walkthrough only under the L3 triggers. Bump the constitution version if it has one.
 
 **Done when:** the charter points at `components.md` and the per-checkpoint rule matches L0–L3.
 
-## 4. Add the catalog test
+## 5. Add the catalog test
 
 Implement [templates/catalog-test.md](templates/catalog-test.md) in the repo's unit-test target with its own language and runner. Register the file in the project if the build system needs it.
 
 **Done when:** the test runs green in the normal unit-test command, and fails if you temporarily add an unindexed public component (revert after).
 
-## 5. Annotate the design file
+## 6. Annotate the design file
 
 Follow [tools/penpot.md](tools/penpot.md) §Annotate. Record the snapshot names, counts and the components that could not be identified automatically in the value spec's design-file record section.
 
 **Done when:** before/after snapshots exist, validation reports no errors, and the record lists what is tagged and what is not.
 
-## 6. Report
+## 7. Report
 
 List files changed, checks run with results, owner decisions needed (dead code, gap priorities), and gaps the next milestone must handle first (its Phase 0). Commit only if asked.
