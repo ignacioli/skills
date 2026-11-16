@@ -4,8 +4,12 @@ description: >-
   Component-first visual workflow: classify every UI change by design delta,
   get each component right once against a written anatomy spec, then only
   assemble and sample pages. Use when creating or changing user-visible UI,
-  when landing a design-system component spec on a repository, or when
-  backfilling a spec and design-file annotations from approved designs.
+  when landing a design-system component spec on a repository, when
+  backfilling a spec and design-file annotations from approved designs, when
+  aligning design-file boards to the design system they were extracted from
+  (geometry contract, page-flow distances, board scan gate), or when
+  machine-verifying a core screen against its design and locking its
+  screenshot baseline.
 ---
 
 # ig-design-system
