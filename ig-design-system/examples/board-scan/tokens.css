@@ -1,0 +1,7 @@
+/* Fictional example token file for the board scan. */
+:root {
+  --color-ink: #222222;
+  --color-paper: #ffffff;
+  --color-accent: #3355aa;
+  --color-line: #dddddd;
+}
